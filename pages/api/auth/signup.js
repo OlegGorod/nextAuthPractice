@@ -31,7 +31,7 @@ async function handler(request, response) {
     email: email,
     password: hashedPassword,
   });
-  response.status(201).json({ message: "Created user!" });
+  response.status(201).json({ message: "The user is created!" });
   client.close()
 }
 
