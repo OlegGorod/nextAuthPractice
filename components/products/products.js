@@ -1,5 +1,4 @@
-import { ProductsContext } from '../../pages/_app'
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./products.module.css";
 import Link from "next/link";
 

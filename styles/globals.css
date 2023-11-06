@@ -18,8 +18,11 @@ h4,
 h5,
 h6 {
   font-family: 'Lato', sans-serif;
+  text-align: center;
+  font-size: 2rem;
+  color: #18a08a;
 }
 
 main {
-  margin-top: 50px;
+  margin-top: 20px;
 }
