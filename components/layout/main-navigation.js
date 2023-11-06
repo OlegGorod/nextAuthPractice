@@ -11,22 +11,31 @@ function MainNavigation() {
 
   return (
     <header className={classes.header}>
-      <Link href="/">
-        <a>
-          <div className={classes.logo}>Yours Logo</div>
-        </a>
-      </Link>
-      <nav>
+      <nav className={classes.nav}>
+        <div>
+          <Link href="/">
+            <a>
+              <div className={classes.logo}>Yours Logo</div>
+            </a>
+          </Link>
+          {session && <Link href="/catalog">Catalog</Link>}
+        </div>
         <ul>
-          {!session && !loading && <li>
-            <Link href="/auth">Login</Link>
-          </li>}
-          {session && <li>
-            <Link href="/profile">Profile</Link>
-          </li>}
-          {session && <li>
-            <button onClick={logOutHandler}>Logout</button>
-          </li>}
+          {!session && !loading && (
+            <li>
+              <Link href="/auth">Login</Link>
+            </li>
+          )}
+          {session && (
+            <li>
+              <Link href="/profile">Profile</Link>
+            </li>
+          )}
+          {session && (
+            <li>
+              <button onClick={logOutHandler}>Logout</button>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
