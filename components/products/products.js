@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import classes from "./products.module.css";
 import Link from "next/link";
-
+import Spinner from "../spinner/spinner";
 
 function Products() {
   const [validImages, setValidImages] = useState([]);
-  const [products, setProducts] = useState([])  
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -40,28 +42,36 @@ function Products() {
       setValidImages(validImages.filter((item) => item !== null));
     };
 
+    setIsLoading(false);
+
     checkImageAvailability();
   }, [products]);
 
   return (
     <section className={classes.catalog}>
       <h2>Our Product</h2>
-      <ul className={classes.container}>
-        {validImages.map((item) => (
-          <Link href={`/catalog/${item['SKU']}`}>
-            <li className={classes.card} key={item['SKU']}>
-              <img src={item["Image URL"]} alt={item["Manufacturer"]} />
-              <div className={classes.bottom}>
-                <div className={classes.bottom_description}>
-                  <div>{item["Manufacturer"]}</div>
-                  <div className={classes.type}>{item["SKU"]}</div>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <ul className={classes.container}>
+          {validImages.map((item) => (
+            <Link href={`/catalog/${item["SKU"]}`} key={item["SKU"]}>
+              <li className={classes.card}>
+                <img src={item["Image URL"]} alt={item["Manufacturer"]} />
+                <div className={classes.bottom}>
+                  <div className={classes.bottom_description}>
+                    <div>{item["Manufacturer"]}</div>
+                    <div className={classes.type}>{item["SKU"]}</div>
+                  </div>
+                  <div className={classes.price}>
+                    {item["Retail Price"]} UAH
+                  </div>
                 </div>
-                <div className={classes.price}>{item["Retail Price"]} UAH</div>
-              </div>
-            </li>
-          </Link>
-        ))}
-      </ul>
+              </li>
+            </Link>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }

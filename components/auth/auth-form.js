@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import classes from "./auth-form.module.css";
 import { signIn } from 'next-auth/client';
 import { useRouter } from 'next/router';
@@ -21,9 +21,21 @@ async function createUser(email, password) {
 
 function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
+  const [isRegistrationSucces, setIsRegistrationSucces] = useState(false)
   const router = useRouter();
   const emailRef = useRef();
   const passwordRef = useRef();
+
+  useEffect(() => {
+   const timer = setTimeout(() => {
+      setIsRegistrationSucces(false)
+    }, 2000);
+  
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [isRegistrationSucces])
+  
 
   async function submitHandler(e) {
     e.preventDefault()
@@ -38,7 +50,9 @@ function AuthForm() {
       router.push('/')
       console.log(result)
     } else {
-      const data = createUser(enteredEmail, enteredPassword);
+      const data = await createUser(enteredEmail, enteredPassword);
+      setIsLogin(true)
+      setIsRegistrationSucces(true)
       return data
     }
   }
@@ -58,6 +72,7 @@ function AuthForm() {
           <label htmlFor="password">Your Password</label>
           <input type="password" id="password" ref={passwordRef} required />
         </div>
+          {isRegistrationSucces && <p>The user is created!</p>}
         <div className={classes.actions}>
           <button>{isLogin ? "Login" : "Create Account"}</button>
           <button

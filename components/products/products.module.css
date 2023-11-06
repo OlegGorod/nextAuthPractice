@@ -1,5 +1,6 @@
 .catalog {
   text-align: center;
+  margin-bottom: 3rem;
 }
 
 .catalog h2 {
@@ -23,6 +24,11 @@
   border: 1px solid #b0ab485e;
   border-radius: 5px;
   list-style-type: none;
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .card img {
