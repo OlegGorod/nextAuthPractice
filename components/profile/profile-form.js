@@ -17,7 +17,6 @@ function ProfileForm() {
       body: JSON.stringify({ newPassword, oldPassword }),
     });
     const data = await response.json();
-    console.log(data);
   }
 
   return (

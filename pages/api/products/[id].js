@@ -9,7 +9,7 @@ function handler(request, response) {
     const {id} = request.query;
     
     const filteredProduct = productsData.find((items) => items['SKU'] === id)
-    if (!filteredProduct) {
+    if (filteredProduct === undefined) {
         response.status(404).json({message: 'Product not found'})
         return
     }

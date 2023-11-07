@@ -15,7 +15,6 @@ async function createUser(email, password) {
   if (!response.ok) {
     throw new Error(data.message || "Bad response");
   }
-  console.log(data)
   return data;
 }
 
@@ -48,7 +47,6 @@ function AuthForm() {
         password: enteredPassword
       })
       router.push('/')
-      console.log(result)
     } else {
       const data = await createUser(enteredEmail, enteredPassword);
       setIsLogin(true)

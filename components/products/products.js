@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classes from "./products.module.css";
-import Link from "next/link";
 import Spinner from "../spinner/spinner";
+import ProductTemplate from "./productTemplate";
 
 function Products() {
   const [validImages, setValidImages] = useState([]);
@@ -47,6 +47,7 @@ function Products() {
     checkImageAvailability();
   }, [products]);
 
+
   return (
     <section className={classes.catalog}>
       <h2>Our Product</h2>
@@ -55,25 +56,14 @@ function Products() {
       ) : (
         <ul className={classes.container}>
           {validImages.map((item) => (
-            <Link href={`/catalog/${item["SKU"]}`} key={item["SKU"]}>
-              <li className={classes.card}>
-                <img src={item["Image URL"]} alt={item["Manufacturer"]} />
-                <div className={classes.bottom}>
-                  <div className={classes.bottom_description}>
-                    <div>{item["Manufacturer"]}</div>
-                    <div className={classes.type}>{item["SKU"]}</div>
-                  </div>
-                  <div className={classes.price}>
-                    {item["Retail Price"]} UAH
-                  </div>
-                </div>
-              </li>
-            </Link>
+            <ProductTemplate products={item} key={item[["SKU"]]}/>
           ))}
         </ul>
       )}
     </section>
+    
   );
 }
 
 export default Products;
+

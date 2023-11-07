@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 function ProductInfo() {
     const router = useRouter()
     const {productid} = router.query
-    
     return <ProductCard id={productid}/>
 }
 
