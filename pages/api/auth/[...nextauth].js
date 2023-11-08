@@ -16,6 +16,7 @@ export default NextAuth({
 
                 if (!user) {
                     client.close()
+                    console.log('No user is')
                     throw new Error('No user is found')
                 }
 

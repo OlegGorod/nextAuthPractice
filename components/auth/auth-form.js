@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import classes from "./auth-form.module.css";
-import { signIn } from 'next-auth/client';
-import { useRouter } from 'next/router';
+import { signIn } from "next-auth/client";
+import { useRouter } from "next/router";
 
 async function createUser(email, password) {
   const response = await fetch("api/auth/signup", {
@@ -20,38 +20,56 @@ async function createUser(email, password) {
 
 function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
-  const [isRegistrationSucces, setIsRegistrationSucces] = useState(false)
+  const [isRegistrationSucces, setIsRegistrationSucces] = useState(false);
+  const [isNotLogged, setIsNotLogged] = useState(false)
   const router = useRouter();
   const emailRef = useRef();
   const passwordRef = useRef();
 
   useEffect(() => {
-   const timer = setTimeout(() => {
-      setIsRegistrationSucces(false)
+   if (isRegistrationSucces) {
+    const timer = setTimeout(() => {
+      setIsRegistrationSucces(false);
     }, 2000);
-  
+
     return () => {
-      clearTimeout(timer)
-    }
-  }, [isRegistrationSucces])
+      clearTimeout(timer);
+    };
+   }
+  }, [isRegistrationSucces]);
+
+  useEffect(() => {
+    if (isNotLogged) {
+      const timer = setTimeout(() => {
+        setIsNotLogged(false)
+      }, 2000);
   
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [isNotLogged]);
 
   async function submitHandler(e) {
-    e.preventDefault()
+    e.preventDefault();
     const enteredEmail = emailRef.current.value;
     const enteredPassword = passwordRef.current.value;
     if (isLogin) {
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         redirect: false,
         email: enteredEmail,
-        password: enteredPassword
-      })
-      router.push('/')
+        password: enteredPassword,
+      });
+      if (result.error) {
+        setIsNotLogged(true)
+      } else {
+        router.push("/");
+      }
     } else {
       const data = await createUser(enteredEmail, enteredPassword);
-      setIsLogin(true)
-      setIsRegistrationSucces(true)
-      return data
+      setIsLogin(true);
+      setIsRegistrationSucces(true);
+      return data;
     }
   }
 
@@ -70,7 +88,8 @@ function AuthForm() {
           <label htmlFor="password">Your Password</label>
           <input type="password" id="password" ref={passwordRef} required />
         </div>
-          {isRegistrationSucces && <p>The user is created!</p>}
+        {isNotLogged && <p style={{color: 'red'}}>Wrong login or email!</p>}
+        {isRegistrationSucces && <p style={{color: 'green'}}>The user is created!</p>}
         <div className={classes.actions}>
           <button>{isLogin ? "Login" : "Create Account"}</button>
           <button

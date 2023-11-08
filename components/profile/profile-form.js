@@ -1,9 +1,35 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import classes from "./profile-form.module.css";
 
 function ProfileForm() {
+  const [passwordIsNotValid, setPasswordIsNotValid] = useState(false)
+  const [passwordIsValid, setPasswordIsValid] = useState(false)
   const newPasswordInput = useRef();
   const oldPasswordInput = useRef();
+  useEffect(() => {
+    if (passwordIsNotValid) {
+      const timer = setTimeout(() => {
+        setPasswordIsNotValid(false)
+      }, 2000);
+  
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+  }, [passwordIsNotValid])
+
+  useEffect(() => {
+   if (passwordIsValid) {
+    const timer = setTimeout(() => {
+      setPasswordIsValid(false)
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer)
+    }
+   }
+  }, [passwordIsValid])
+
 
   async function changePasswordHandler(e) {
     e.preventDefault();
@@ -17,6 +43,14 @@ function ProfileForm() {
       body: JSON.stringify({ newPassword, oldPassword }),
     });
     const data = await response.json();
+    if (!response.ok) {
+      setPasswordIsNotValid(true)
+    } else {
+      setPasswordIsValid(true)
+      newPasswordInput.current.value = "";
+      oldPasswordInput.current.value = "";
+    }
+
   }
 
   return (
@@ -29,6 +63,8 @@ function ProfileForm() {
         <label htmlFor="old-password">Old Password</label>
         <input type="password" id="old-password" ref={oldPasswordInput} />
       </div>
+      {passwordIsNotValid && <p style={{color: 'red'}}>Password is not valid</p>}
+      {passwordIsValid && <p style={{color: 'green'}}>Password was changed successfully</p>}
       <div className={classes.action}>
         <button>Change Password</button>
       </div>
