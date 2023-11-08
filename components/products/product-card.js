@@ -90,7 +90,7 @@ function SimilarProducts({ similarProducts }) {
       <h3>Similar products</h3>
       <ul className={productsClasses.container}>
         {similarProducts?.slice(0, 3).map((products) => (
-          <ProductTemplate products={products} style={stylingSimilarCard} />
+          <ProductTemplate products={products} style={stylingSimilarCard} key={products['SKU']} />
         ))}
       </ul>
     </section>
