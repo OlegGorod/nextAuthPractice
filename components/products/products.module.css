@@ -1,0 +1,59 @@
+.catalog {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.catalog h2 {
+  font-size: 2rem;
+  color: #18a08a;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  list-style-type: none;
+  margin: 25px 0;
+}
+
+.card {
+  width: 30%;
+  padding: 1rem;
+  border: 1px solid #b0ab485e;
+  border-radius: 5px;
+  list-style-type: none;
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.card img {
+  width: 100%;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 5px;
+}
+
+.bottom_description {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  text-align: left;
+}
+
+.type {
+  font-weight: bold;
+}
+
+.price {
+  color: green;
+  font-weight: bold;
+}

@@ -1,0 +1,43 @@
+.product {
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
+    margin-top: 20px;
+}
+
+.image {
+    border: 1px solid #b0ab485e;
+    border-radius: 5px;
+    width: 35%;
+    padding: 1rem;
+}
+
+.product img {
+    width: 100%;
+}
+
+.router {
+    font-size: 15px;
+    font-weight: bold;
+    color: gray;
+}
+
+.type {
+    font-weight: bold;
+}
+
+.quantity, .details {
+    font-size: 13px;
+
+}
+
+.price {
+    color: green;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.similar {
+    margin-top: 25px;
+}
+
